@@ -10,13 +10,13 @@ PhysicsObject::~PhysicsObject(){
 
 }
 void PhysicsObject::update(float deltaTime){
+	velocity += acceleration*deltaTime;
 	for each(PhysicsObject* p in screen.physObjects) {
 		if (p == this) continue;
 		if (col.checkIfColliding(p->col)) {
-			printf("Colliding\n");
+			velocity = sf::Vector2f(0, 0);
 		}
 	}
-	velocity += acceleration*deltaTime;
 	position += velocity * deltaTime;
 	this->sprite.setPosition(position);
 	this->sprite.setRotation(rotation);

@@ -11,8 +11,10 @@ public:
 	int getVerticesSize();
 	sf::FloatRect getAABB();
 	void setVertex(sf::Vector2f vertex, const int index);
+	void update();
 	PhysicsObject& attachedObj;
 private:
 	sf::FloatRect aabb;
+	std::vector<double> initAngle;
 	std::vector<sf::Vector2f> vertices;//Points should be arranged in a clockwise fashion connecting lines. Do not repeat last point
 };

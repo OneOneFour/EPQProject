@@ -18,10 +18,11 @@ double getArgument(sf::Vector2f A){
 double getArgumentH(sf::Vector2f A){
 	return std::atan2(A.x, A.y);
 }
-void normalizeVector(sf::Vector2f& vector){
+sf::Vector2f normalizeVector(sf::Vector2f vector){
 	float magnitude = std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2));
 	vector.x = vector.x /  magnitude;
 	vector.y = vector.y / magnitude;
+	return vector;
 }
 sf::Vector2f lerp(sf::Vector2f vectorA, sf::Vector2f vectorB, float lerpFactor){
 	return sf::Vector2f(vectorA.x + (lerpFactor* (vectorB.x - vectorA.x)), vectorA.y + (lerpFactor* (vectorB.y - vectorA.y)));

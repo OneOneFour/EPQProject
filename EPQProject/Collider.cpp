@@ -1,17 +1,32 @@
+#define _USE_MATH_DEFINES 
+#include <cmath>
 #include "Collider.hpp"
 #include "PhysicsObject.hpp"
+#include "Helpies.hpp"
+
 Collider::Collider(PhysicsObject& obj):attachedObj(obj){
 	
 }
 void Collider::init(std::vector<sf::Vector2f> vertices) {
 	this->vertices = vertices;
+	for (int i = 0; i < this->vertices.size(); i++) {
+		this->vertices[i].x *= attachedObj.getSprite().getTexture()->getSize().x / 2;
+		this->vertices[i].y *= attachedObj.getSprite().getTexture()->getSize().y / 2;
+		this->initAngle.push_back(getArgument(this->vertices[i])+ M_PI/2);
+	}
+	update();
+}
+Collider::~Collider() {
+
+}
+void Collider::update() {
 	aabb.left = FLT_MAX;
 	aabb.top = FLT_MAX;
 	float right = 0;
 	float bottom = 0;
-	for (int i = 0; i < this->vertices.size();i++) {
-		this->vertices[i].x = this->vertices[i].x * attachedObj.getSprite().getTexture()->getSize().x/2;
-		this->vertices[i].y = this->vertices[i].y * attachedObj.getSprite().getTexture()->getSize().y/2;
+	for (int i = 0; i < this->vertices.size(); i++) {
+		this->vertices[i] = sf::Vector2f(getMagnitude(this->vertices[i])*sin(degreeToRad(attachedObj.getRotation()) + initAngle[i]),
+										-getMagnitude(this->vertices[i])*cos(degreeToRad(attachedObj.getRotation()) + initAngle[i]));
 		aabb.left = (this->vertices[i].x < aabb.left) ? this->vertices[i].x : aabb.left;
 		aabb.top = (this->vertices[i].y < aabb.top) ? this->vertices[i].y : aabb.top;
 		right = (this->vertices[i].x > right) ? this->vertices[i].x : right;
@@ -20,11 +35,10 @@ void Collider::init(std::vector<sf::Vector2f> vertices) {
 	aabb.width = right - aabb.left;
 	aabb.height = bottom - aabb.top;
 }
-Collider::~Collider() {
-
-}
 bool Collider::checkIfColliding(Collider& otherCol) {
 	//AABB check
+	update();
+	otherCol.update();
 	sf::FloatRect otherAABB = otherCol.getAABB();
 	if (aabb.top + aabb.height + attachedObj.getPos().y <= otherAABB.top + otherCol.attachedObj.getPos().y) return false;
 	if (aabb.top + attachedObj.getPos().y >= otherAABB.top + otherAABB.height + otherCol.attachedObj.getPos().y) return false;
@@ -67,7 +81,8 @@ bool Collider::checkIfColliding(Collider& otherCol) {
 	return false;
 }
 sf::Vector2f Collider::getVertex(const int index){
-	return vertices[index];
+	const int rIndex = index % vertices.size();
+	return vertices[rIndex];
 }
 
 int Collider::getVerticesSize()
