@@ -63,6 +63,22 @@ ShipData ResourceBank::loadShipData(std::ifstream& fileStream){
 	}
 	return shipD;
 }
+std::vector<sf::Vector2f> getVertices(std::ifstream& fileStream) {
+	std::string data;
+	std::vector<sf::Vector2f> vertices;
+	while (std::getline(fileStream, data) && data.find("}") == std::string::npos) {
+		data.erase(std::remove_if(data.begin(), data.end(), isspace), data.end());
+		size_t cPos = data.find(",");
+		if (cPos == std::string::npos) {
+			printf("ERROR: Error reading vertex data. Ensure two values are given when a vector2 is required\n");
+			return std::vector<sf::Vector2f>();
+		}
+		vertices.push_back(sf::Vector2f(std::atof(data.substr(0, cPos).c_str()), 
+			std::atof(data.substr(cPos+1).c_str())));
+
+	}
+	return vertices;
+}
 PhysicsData ResourceBank::loadPhysicsData(std::ifstream& fileStream){
 	std::string data;
 	PhysicsData physD;
@@ -73,6 +89,9 @@ PhysicsData ResourceBank::loadPhysicsData(std::ifstream& fileStream){
 		}
 		else if (data.find("mass=") != std::string::npos) {
 			physD.mass = std::atof(data.substr(5).c_str());
+		}
+		else if (data.find("Vertices{") != std::string::npos) {
+			physD.vertices = getVertices(fileStream);
 		}
 	}
 	return physD;
@@ -114,11 +133,11 @@ void ResourceBank::addDefs(const std::string & filepath){
 		if (lineData.find("name=") != std::string::npos) {
 			name = lineData.substr(5);
 		}
-		else if (lineData.find("ShipData") != std::string::npos) {
+		else if (lineData.find("ShipData{") != std::string::npos) {
 			ldata.shipData = loadShipData(file);
 			
 		}
-		else if (lineData.find("PhysicsData") != std::string::npos) {
+		else if (lineData.find("PhysicsData{") != std::string::npos) {
 			printf("LOADED: Physics Def %s at %s \n", name.c_str(), filepath.c_str());
 			ldata.physicsData = loadPhysicsData(file);
 		}

@@ -7,6 +7,7 @@ LevelScreen::LevelScreen(Game* game){
 	mainCamera.setSize(game->getWidth(),game->getHeight());
 	mainCamera.setCenter(mainCamera.getSize().x / 2, mainCamera.getSize().y / 2);
 	createGameObject(new Ship(sf::Vector2f(200, 200), *this, "testShip"));
+	createGameObject(new PhysicsObject(sf::Vector2f(500, 300), *this, "testShip"));
 }
 LevelScreen::~LevelScreen(){
 	while (!physObjects.empty()) {

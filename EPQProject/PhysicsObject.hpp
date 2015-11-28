@@ -2,6 +2,8 @@
 #include "GameObject.hpp"
 #include "LevelScreen.hpp"
 #include "Definitions.hpp"
+#include "Collider.hpp"
+class Collider;
 class PhysicsObject : public GameObject{
 public:
 	PhysicsObject(sf::Vector2f position,Screen& screen,std::string name);
@@ -16,15 +18,14 @@ public:
 	void setAcceleration(sf::Vector2f accel);
 	sf::Vector2f getAcceleration();
 	PhysicsData data;
-	void setActive(bool active);
-	bool getActive();
+	Collider* getCollider();
 protected:
 	std::string textureID;
+	Collider col;
 	//sf::Vector2f centerOfMass;
 	sf::Vector2f angularAccel;
 	sf::Vector2f angularVeloc;
 	sf::Vector2f velocity;
 	sf::Vector2f acceleration;
 	sf::Sprite sprite;
-	bool active;
 };

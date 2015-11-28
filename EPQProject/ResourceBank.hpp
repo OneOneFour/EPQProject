@@ -19,6 +19,7 @@ public:
 	void addTexture(const std::string& name, const std::string& filepath);
 	void addFont(const std::string& name, const std::string& filepath);
 private:
+	std::vector<sf::Vector2f> readVertices(std::ifstream& fileStream);
 	ShipData loadShipData(std::ifstream& fileStream);
 	PhysicsData loadPhysicsData(std::ifstream& fileStream);
 	std::map<std::string, sf::Texture*> textures;

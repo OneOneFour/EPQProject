@@ -1,9 +1,10 @@
 #pragma once
 #include <SFML\Graphics.hpp>
-#include "PhysicsObject.hpp"
+class PhysicsObject;
 class Collider {
 public:
-	Collider(std::vector<sf::Vector2f> vertices,PhysicsObject& obj);
+	Collider(PhysicsObject& obj);
+	void init(std::vector<sf::Vector2f> vertices);
 	~Collider();
 	bool checkIfColliding(Collider& otherCol);
 	sf::Vector2f getVertex(const int index);

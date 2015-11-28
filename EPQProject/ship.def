@@ -7,6 +7,11 @@ manuvarbility = 50
 PhysicsData{
 sprite = triShip
 mass = 1.f
-CoR = 0.5f
+Vertices{
+	-1,-1
+	1,-1
+	1,1
+	-1,1
+}
 }
 

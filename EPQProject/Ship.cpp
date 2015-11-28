@@ -19,7 +19,7 @@ void Ship::update(float deltaTime){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		rotation += manuvarability * deltaTime;
 	}
-	this->acceleration = sf::Vector2f(thrustLevel*maxThrust * sin(degreeToRad(180 - rotation)), thrustLevel*maxThrust*cos(degreeToRad(180 - rotation)));
+	this->velocity = sf::Vector2f(thrustLevel*maxThrust * sin(degreeToRad(180 - rotation)), thrustLevel*maxThrust*cos(degreeToRad(180 - rotation)));
 	PhysicsObject::update(deltaTime);//IMPORTANT
 }
 Ship::~Ship(){

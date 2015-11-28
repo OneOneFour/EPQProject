@@ -1,15 +1,21 @@
 #include "PhysicsObject.hpp"
 
 
-PhysicsObject::PhysicsObject(sf::Vector2f position,Screen& screen,std::string name) : GameObject(position,screen){
+PhysicsObject::PhysicsObject(sf::Vector2f position,Screen& screen,std::string name) : GameObject(position,screen),col(*this){
 	this->data = screen.game->bank.getDefs(name).physicsData;
 	this->setSprite(data.textureID);
+	this->col.init(data.vertices);
 }
 PhysicsObject::~PhysicsObject(){
 
 }
 void PhysicsObject::update(float deltaTime){
-	if (!active) return;
+	for each(PhysicsObject* p in screen.physObjects) {
+		if (p == this) continue;
+		if (col.checkIfColliding(p->col)) {
+			printf("Colliding\n");
+		}
+	}
 	velocity += acceleration*deltaTime;
 	position += velocity * deltaTime;
 	this->sprite.setPosition(position);
@@ -36,11 +42,8 @@ void PhysicsObject::setAcceleration(sf::Vector2f accel){
 sf::Vector2f PhysicsObject::getAcceleration(){
 	return acceleration;
 }
-void PhysicsObject::setActive(bool active){
-	this->active = active;
-}
 
-bool PhysicsObject::getActive()
+Collider * PhysicsObject::getCollider()
 {
-	return active;
+	return &col;
 }
