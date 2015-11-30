@@ -4,20 +4,33 @@ PhysicsObject::PhysicsObject(sf::Vector2f position,PhysicsWorld& world,std::stri
 	this->data = world.bankPtr->getDefs(prefID).physicsData;
 	this->setSprite(data.textureID);
 	this->col.init(data.vertices);
+	this->kinematic = true;
+}
+PhysicsObject::PhysicsObject(sf::Vector2f position, PhysicsWorld & world):GameObject(position),col(*this),world(world){
+	this->kinematic = false;
 }
 PhysicsObject::~PhysicsObject(){
 
 }
 void PhysicsObject::update(float deltaTime){
-	position += velocity * deltaTime;
-	this->sprite.setPosition(position);
-	this->sprite.setRotation(rotation);
+	if (kinematic) {
+		position += velocity * deltaTime;
+		this->sprite.setPosition(position);
+		this->sprite.setRotation(rotation);
+	}
+	else {
+		velocity = sf::Vector2f(0, 0);
+	}
 }
 void PhysicsObject::setVelocity(sf::Vector2f vel){
 	this->velocity = vel;
 }
 void PhysicsObject::setName(const std::string & name){
 	this->name = name;
+}
+bool PhysicsObject::isKinematic()
+{
+	return kinematic;
 }
 std::string PhysicsObject::getName()
 {

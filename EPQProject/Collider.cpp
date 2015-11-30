@@ -16,6 +16,14 @@ void Collider::init(std::vector<sf::Vector2f> vertices) {
 	}
 	update();
 }
+void Collider::init(std::vector<sf::Vertex> vertices) {
+	this->vertices.resize(vertices.size());
+	for (int i = 0; i < vertices.size(); i++) {
+		this->vertices[i] = vertices[i].position - this->attachedObj.getPos();
+		this->initAngle.push_back(getArgument(this->vertices[i]) + M_PI / 2);
+	}
+	update();
+}
 Collider::~Collider() {
 
 }

@@ -7,12 +7,14 @@ class PhysicsWorld;
 class PhysicsObject : public GameObject{
 public:
 	PhysicsObject(sf::Vector2f position,PhysicsWorld& world,std::string prefId);
+	PhysicsObject(sf::Vector2f position, PhysicsWorld& world);
 	~PhysicsObject();
 	virtual void update(float deltaTime); 
 	//PhysicsObject* checkForCollisions(); //checks for collision against all phys objects, returns nullptr if none found
 	// PhysicsObject* rayCast(sf::Vector2f origin,sf::Vector2f direction,float maxDistance = FLT_MAX);
 	void setVelocity(sf::Vector2f vel);
 	void setName(const std::string& name);
+	bool isKinematic();
 	std::string getName();
 	sf::Sprite getSprite();
 	virtual void setSprite(std::string textureID);
@@ -22,6 +24,7 @@ public:
 	PhysicsData data;
 	Collider* getCollider();
 protected:
+	bool kinematic;
 	PhysicsWorld& world;
 	std::string name;
 	std::string textureID;

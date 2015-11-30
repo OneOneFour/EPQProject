@@ -42,10 +42,18 @@ void PhysicsWorld::step(float deltaTime) {
 		PhysicsObject* a = i->first;
 		PhysicsObject* b = i->second;
 
-		sf::Vector2f momentum = a->getVelocity()*a->data.mass + b->getVelocity() * b->data.mass;
-		sf::Vector2f presC = COR * (a->getVelocity() - b->getVelocity());
-		a->setVelocity((momentum - b->data.mass*presC) / (a->data.mass + b->data.mass));
-		b->setVelocity(a->getVelocity() + presC);
+		if (!a->isKinematic()) {
+			b->setVelocity(sf::Vector2f(0, 0));
+		}
+		else if (!b->isKinematic()) {
+			a->setVelocity(sf::Vector2f(0, 0));
+		}
+		else {
+			sf::Vector2f momentum = a->getVelocity()*a->data.mass + b->getVelocity() * b->data.mass;
+			sf::Vector2f presC = COR * (a->getVelocity() - b->getVelocity());
+			a->setVelocity((momentum - b->data.mass*presC) / (a->data.mass + b->data.mass));
+			b->setVelocity(a->getVelocity() + presC);
+		}
 
 	}
 	for each(PhysicsObject* a in objects){

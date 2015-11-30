@@ -1,18 +1,19 @@
 name = testShip
 ShipData{
 health = 100
-maxThrust = 200
-manuvarbility = 50
+manuvarbility = 50.f
+maxThrust = 100.f
 }
 PhysicsData{
-sprite = triShip
+sprite = ship
 mass = 1.f
 Vertices{
--0.5,-0.6
--0.2,-1.0
-0.5,-0.3
-1.0,0
-1.0,1.0
--1.0,1.0
+0,-0.95
+0.167,0.2
+0.87,-0.24
+0.167,1
+-0.167,1
+-0.967,-0.24
+-0.167,0.21
 }
 

@@ -122,8 +122,10 @@ void Game::loadLevel() {
 	addToScreens(new LevelScreen(this));
 }
 void Game::loadMedia(){
+	bank.addTexture("ship", "graphics/ShipModules.png");
 	bank.addFont("futura", "futura-condensed-normal.ttf");
 	bank.addDefs("ship.gamedef");
+	bank.addDefs("box.gamedef");
 }
 void Game::addToScreens(Screen* screen){
 	screens.push(screen);

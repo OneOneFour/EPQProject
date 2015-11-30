@@ -1,0 +1,12 @@
+name = testShip
+ShipData{
+health = 100
+maxThrust = 200
+manuvarbility = 50
+}
+PhysicsData{
+sprite = triShip
+mass = 1.f
+CoR = 0.5f
+}
+

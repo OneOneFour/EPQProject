@@ -3,15 +3,16 @@
 #include "Helpies.hpp"
 #include "PhysicsObject.hpp"
 #include "Ship.hpp"
+#include "Planet.hpp"
 LevelScreen::LevelScreen(Game* game){
 	this->game = game;
 	this->world.init(*this);
 	mainCamera.setSize(game->getWidth(),game->getHeight());
 	mainCamera.setCenter(mainCamera.getSize().x / 2, mainCamera.getSize().y / 2);
 	world.createPhysObject(new Ship(sf::Vector2f(200, 200), world, "testShip"));
-	world.createPhysObject(new PhysicsObject(sf::Vector2f(500, 300), world, "testShip"));
-	world.createPhysObject(new PhysicsObject(sf::Vector2f(100, 10), world, "testShip"));
-	world.createPhysObject(new PhysicsObject(sf::Vector2f(700,200 ), world, "testShip"));
+	world.createPhysObject(new PhysicsObject(sf::Vector2f(300, 200), world, "box"));
+
+	world.createPhysObject(new Planet(sf::Vector2f(600, 250), world, 6, 10, 50, 10));
 }
 LevelScreen::~LevelScreen(){
 	while (!uiElements.empty()) {
@@ -39,10 +40,14 @@ void LevelScreen::update(float deltaTime){
 }
 void LevelScreen::draw(float deltaTime) {
 	game->window.clear(sf::Color::Black);
-
 	for (int i = 0; i < world.getObjCount(); i++) {
 		PhysicsObject* obj = world.getPhysicsObject(i);
-		game->window.draw(world.getPhysicsObject(i)->getSprite());
+		if (dynamic_cast<Planet*>(obj) != NULL) {
+			dynamic_cast<Planet*>(obj)->Draw(game->window);
+		}
+		else {
+			game->window.draw(world.getPhysicsObject(i)->getSprite());
+		}
 		for (int i = 0; i < obj->getCollider()->getVerticesSize(); i++) {
 			sf::Vertex vertices[] = { sf::Vertex(sf::Vector2f(obj->getCollider()->getVertex(i)) + obj->getPos(),sf::Color::Green),
 			sf::Vertex(sf::Vector2f(obj->getCollider()->getVertex(i + 1) + obj->getPos()),sf::Color::Green) };
@@ -53,10 +58,11 @@ void LevelScreen::draw(float deltaTime) {
 			aabb.setOutlineColor(sf::Color::Blue);
 			aabb.setOutlineThickness(1.0f);
 			game->window.draw(aabb);
-			for each(UIElement* ui in uiElements) {
-				ui->draw(game->window);
-			}
-			game->window.setView(mainCamera);
+			
 		}
 	}
+	for each(UIElement* ui in uiElements) {
+		ui->draw(game->window);
+	}
+	game->window.setView(mainCamera);
 }
