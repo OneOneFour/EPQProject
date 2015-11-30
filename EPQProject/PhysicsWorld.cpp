@@ -4,7 +4,6 @@ PhysicsWorld::PhysicsWorld(){
 }
 void PhysicsWorld::init(Screen& screen) {
 	this->bankPtr = &screen.game->bank;
-	printf("HOWDY");
 }
 PhysicsObject * PhysicsWorld::createPhysObject(PhysicsObject * obj)
 {
