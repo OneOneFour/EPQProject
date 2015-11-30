@@ -1,9 +1,10 @@
 #include "Ship.hpp"
 #include "Helpies.hpp"
-Ship::Ship(sf::Vector2f position, Screen& screen,std::string name) :PhysicsObject(position, screen,name) {
-	this->health = this->screen.game->bank.getDefs(name).shipData.health;
-	this->maxThrust = this->screen.game->bank.getDefs(name).shipData.maxThrust;
-	this->manuvarability = this->screen.game->bank.getDefs(name).shipData.manuv;
+#include "PhysicsWorld.hpp"
+Ship::Ship(sf::Vector2f position, PhysicsWorld& world,std::string name) :PhysicsObject(position, world,name) {
+	this->health = world.bankPtr->getDefs(name).shipData.health;
+	this->maxThrust = world.bankPtr->getDefs(name).shipData.maxThrust;
+	this->manuvarability = world.bankPtr->getDefs(name).shipData.manuv;
 	thrustLevel = 0.f;
 }
 void Ship::update(float deltaTime){

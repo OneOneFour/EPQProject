@@ -3,7 +3,7 @@
 #include "Screen.hpp"
 class GameObject{
 public:
-	GameObject(sf::Vector2f position,Screen& screen);
+	GameObject(sf::Vector2f position);
 	~GameObject();
 	float getRotation();
 	void setRotation(float rotation);
@@ -13,6 +13,5 @@ public:
 protected:
 	float rotation = 0;
 	sf::Vector2f position; 
-	Screen& screen;
 };
 

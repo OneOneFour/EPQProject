@@ -35,23 +35,21 @@ void Collider::update() {
 	aabb.width = right - aabb.left;
 	aabb.height = bottom - aabb.top;
 }
-bool Collider::checkIfColliding(Collider& otherCol) {
-	//AABB check
+bool Collider::colCheck(Collider& otherCol,sf::Vector2f iPos,sf::Vector2f jPos) {
 	update();
 	otherCol.update();
 	sf::FloatRect otherAABB = otherCol.getAABB();
-	if (aabb.top + aabb.height + attachedObj.getPos().y <= otherAABB.top + otherCol.attachedObj.getPos().y) return false;
-	if (aabb.top + attachedObj.getPos().y >= otherAABB.top + otherAABB.height + otherCol.attachedObj.getPos().y) return false;
-	if (aabb.left + aabb.width + attachedObj.getPos().x <= otherAABB.left + otherCol.attachedObj.getPos().x) return false;
-	if (aabb.left + attachedObj.getPos().x >= otherAABB.left + otherAABB.width + otherCol.attachedObj.getPos().x) return false;
-	printf("AABB collision\n");
+	if (aabb.top + aabb.height + iPos.y <= otherAABB.top + jPos.y) return false ;
+	if (aabb.top + iPos.y >= otherAABB.top + otherAABB.height + jPos.y) return false;
+	if (aabb.left + aabb.width + iPos.x <= otherAABB.left + jPos.x) return false;
+	if (aabb.left + iPos.x >= otherAABB.left + otherAABB.width + jPos.x) return false;
 	for (int i = 0; i < vertices.size(); i++) {
 		for (int j = 0; j < otherCol.getVerticesSize(); j++) {
-			sf::Vector2f iA = vertices[i] + attachedObj.getPos();
-			sf::Vector2f iB = ((i + 1 >= vertices.size()) ? vertices[0] : vertices[i + 1]) + attachedObj.getPos();
+			sf::Vector2f iA = vertices[i] + iPos;
+			sf::Vector2f iB = ((i + 1 >= vertices.size()) ? vertices[0] : vertices[i + 1]) + iPos;
 
-			sf::Vector2f jA = otherCol.getVertex(i) + otherCol.attachedObj.getPos();
-			sf::Vector2f jB = ((j + 1 >= otherCol.getVerticesSize()) ? otherCol.getVertex(0) : otherCol.getVertex(j + 1)) + otherCol.attachedObj.getPos();
+			sf::Vector2f jA = otherCol.getVertex(i) + jPos;
+			sf::Vector2f jB = ((j + 1 >= otherCol.getVerticesSize()) ? otherCol.getVertex(0) : otherCol.getVertex(j + 1)) + jPos;
 			sf::Vector2f colPoint;
 			if (iA.x - iB.x == 0 || jA.x - jB.x == 0) {
 				if (iA.x - iB.x == jA.x - jB.x) continue;

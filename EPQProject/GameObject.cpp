@@ -1,5 +1,5 @@
 #include "GameObject.hpp"
-GameObject::GameObject(sf::Vector2f position,Screen& screen):screen(screen){
+GameObject::GameObject(sf::Vector2f position){
 	this->position = position;
 }
 GameObject::~GameObject(){

@@ -1,6 +1,7 @@
 #include "Planet.hpp"
 #include <cmath>
 Planet::Planet(){
+
 }
 void Planet::init(sf::Vector2f origin, int roughness, float maxAlt, float radius = 150.f,float mass = 1.0f){
 	this->leftPos = sf::Vector2f(0, 0);
@@ -70,5 +71,4 @@ void Planet::Draw(sf::RenderWindow& window){
 		verticesArrPtr[i] = vertices[i];
 	}
 	window.draw(verticesArrPtr, vertices.size(), sf::LinesStrip);
-
 }

@@ -2,7 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "Screen.hpp"
 #include "GameObject.hpp"
-#include "PhysicsObject.hpp"
+#include "PhysicsWorld.hpp"
 #include "UIElement.hpp"
 class LevelScreen : public Screen{
 public:
@@ -13,5 +13,6 @@ public:
 	void draw(float deltaTime);
 private:
 	sf::View mainCamera;
+	PhysicsWorld world;
 };
 

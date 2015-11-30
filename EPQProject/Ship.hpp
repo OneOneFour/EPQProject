@@ -3,7 +3,7 @@
 #include <SFML\Graphics.hpp>
 class Ship :public PhysicsObject{
 public:
-	Ship(sf::Vector2f position,Screen& screen,std::string name);
+	Ship(sf::Vector2f position,PhysicsWorld& world,std::string name);
 	~Ship();
 	void changeHealth(float deltaHealth);
 	void setHealth(float health);

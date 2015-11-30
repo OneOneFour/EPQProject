@@ -98,7 +98,7 @@ PhysicsData ResourceBank::loadPhysicsData(std::ifstream& fileStream){
 }
 sf::Texture* ResourceBank::getTexture(const std::string& name){
 	if (textures.find(name) == textures.end()){
-		printf("Unable to find texture %s. Using default \n", name.c_str());
+		printf("WARNING: Unable to find texture %s. Using default \n", name.c_str());
 		return textures["default"];
 	}
 	return textures[name];
@@ -111,7 +111,7 @@ sf::Font* ResourceBank::getFont(const std::string& name){
 	return fonts[name];
 }
 
-Data ResourceBank::getDefs(const std::string & name){
+Data ResourceBank::getDefs(const std::string& name){
 	if (data.find(name) == data.end()) {
 		printf("ERROR: Unable to find def %s. \n", name.c_str());
 		return Data();
