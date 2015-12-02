@@ -18,7 +18,10 @@ double getArgument(sf::Vector2f A){
 double getArgumentH(sf::Vector2f A){
 	return std::atan2(A.x, A.y);
 }
-sf::Vector2f normalizeVector(sf::Vector2f vector){
+float dotProduct(sf::Vector2f a, sf::Vector2f b) {
+	return a.x*b.x + a.y*b.y;
+}
+sf::Vector2f normalizeVctor(sf::Vector2f vector){
 	float magnitude = std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2));
 	vector.x = vector.x /  magnitude;
 	vector.y = vector.y / magnitude;
