@@ -2,7 +2,7 @@
 #include <SFML\Graphics.hpp>
 
 struct PhysicsData {
-	float mass, coR;
+	float mass;
 	std::string textureID;
 	std::vector<sf::Vector2f> vertices;
 };
