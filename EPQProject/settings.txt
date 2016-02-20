@@ -2,5 +2,5 @@ Width:800
 Height:480
 Fullscreen:0
 VSync:1
-FpsCap:60
+FpsCap:0
 Antialiasing:2

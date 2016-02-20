@@ -34,6 +34,9 @@ Game::Game(){
 				antialising = std::atoi(lineData.substr(13).c_str());
 				std::cout << "INFO: Antialiasing is " << antialising << "x" << std::endl;
 			}
+			else if (lineData.find("Debug:") != std::string::npos) {
+				setDebug(std::atoi(lineData.substr(6).c_str()));		
+			}
 			else {
 				continue;
 			}
@@ -65,7 +68,7 @@ Game::Game(){
 		window.create(sf::VideoMode(width, height), "EPQ Project", sf::Style::Close,gpuSettings);
 	}
 	window.setVerticalSyncEnabled(vsync);
-	if (!vsync) window.setFramerateLimit(fpsCap);
+	if (!vsync && fpsCap != 0) window.setFramerateLimit(fpsCap);
 	//Pre load code here please
 	loadMedia();
 	loadLevel();
@@ -124,6 +127,8 @@ void Game::loadLevel() {
 void Game::loadMedia(){
 	bank.addTexture("ship", "graphics/ShipModules.png");
 	bank.addFont("futura", "futura-condensed-normal.ttf");
+	bank.addTexture("bullet", "graphics/bullet.png");
+	bank.addDefs("bullet.gamedef");
 	bank.addDefs("ship.gamedef");
 	bank.addDefs("box.gamedef");
 }
@@ -145,6 +150,14 @@ int Game::getphysQ()
 float Game::getfpsCap()
 {
 	return fpsCap;
+}
+bool Game::getDebug()
+{
+	return debug;
+}
+void Game::setDebug(bool debug){
+	this->debug = debug;
+	std::cout << "DEBUGGING IS " << ((debug) ? "ON": "OFF") << std::endl;
 }
 Screen* Game::getTopScreen(){
 	if (screens.empty()) return nullptr;

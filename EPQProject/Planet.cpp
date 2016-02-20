@@ -3,7 +3,7 @@
 #include "Planet.hpp"
 
 
-Planet::Planet(sf::Vector2f origin,PhysicsWorld& world,int roughness, float maxAlt, float radius = 150.f, float mass = 1.0f):PhysicsObject(origin,world){
+Planet::Planet(sf::Vector2f origin,PhysicsWorld& world,int roughness, float maxAlt, float radius = 150.f, float mass = 1200.0f):PhysicsObject(origin,world){
 	this->leftPos = sf::Vector2f(0, 0);
 	this->rightPos = sf::Vector2f(800, 0);;
 	heightmap.push_back(leftPos);

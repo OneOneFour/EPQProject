@@ -22,6 +22,9 @@ public:
 	int getHeight();
 	int getphysQ();
 	float getfpsCap();
+	bool getDebug();
+
+	void setDebug(bool debug);
 
 	Screen* getTopScreen();
 
@@ -32,6 +35,7 @@ public:
 	sf::Clock deltaClock;
 	std::stack<Screen*> screens;
 private:
+	bool debug;
 	void loadMedia();
 	int width = 800;
 	int height = 480;

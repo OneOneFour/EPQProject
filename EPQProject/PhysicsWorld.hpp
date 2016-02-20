@@ -12,9 +12,11 @@ public:
 	int getObjCount();
 	void step(float deltaTime);
 	void destroyObject(int id);
+	void destroyObject(PhysicsObject* obj);
 	~PhysicsWorld();
 	ResourceBank* bankPtr;
 private:
+	std::stack<PhysicsObject*> deleteObj;
 	std::vector<PhysicsObject*> objects; //May change to std::map?
 };
 

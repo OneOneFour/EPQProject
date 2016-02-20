@@ -5,6 +5,7 @@
 #include <fstream>
 #include "Definitions.hpp"
 struct Data {
+	BulletData bulletData;
 	ShipData shipData;
 	PhysicsData physicsData;
 };
@@ -19,7 +20,8 @@ public:
 	void addTexture(const std::string& name, const std::string& filepath);
 	void addFont(const std::string& name, const std::string& filepath);
 private:
-	std::vector<sf::Vector2f> readVertices(std::ifstream& fileStream);
+	std::vector<sf::Vector2f> getVertices(std::ifstream& fileStream);
+	BulletData loadBulletData(std::ifstream& fileStream);
 	ShipData loadShipData(std::ifstream& fileStream);
 	PhysicsData loadPhysicsData(std::ifstream& fileStream);
 	std::map<std::string, sf::Texture*> textures;

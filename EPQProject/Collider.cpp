@@ -1,8 +1,9 @@
 #define _USE_MATH_DEFINES 
 #include <cmath>
 #include "Collider.hpp"
-#include "PhysicsObject.hpp"
+#include "Bullet.hpp"
 #include "Helpies.hpp"
+#include "PhysicsObject.hpp"
 
 Collider::Collider(PhysicsObject& obj):attachedObj(obj){
 	
@@ -43,7 +44,21 @@ void Collider::update() {
 	aabb.width = right - aabb.left;
 	aabb.height = bottom - aabb.top;
 }
+sf::Vector2f Collider::getLastCol()
+{
+	return lastColPoint;
+}
 bool Collider::colCheck(Collider& otherCol,sf::Vector2f iPos,sf::Vector2f jPos) {
+	if (dynamic_cast<Bullet*>(&attachedObj) != nullptr) {
+		if (dynamic_cast<Bullet*>(&attachedObj)->getOwner()->getCollider() == &otherCol || dynamic_cast<Bullet*>(&otherCol.attachedObj) != nullptr) {
+			return false;
+		}
+	}
+	else if (dynamic_cast<Bullet*>(&otherCol.attachedObj) !=nullptr) {
+		if (dynamic_cast<Bullet*>(&otherCol.attachedObj)->getOwner()->getCollider() == this) {
+			return false;
+		}
+	}
 	update();
 	otherCol.update();
 	sf::FloatRect otherAABB = otherCol.getAABB();
@@ -79,6 +94,7 @@ bool Collider::colCheck(Collider& otherCol,sf::Vector2f iPos,sf::Vector2f jPos) 
 				((colPoint.y >= iA.y && colPoint.y <= iB.y) || (colPoint.y <= iA.y && colPoint.y >= iB.y))) {
 				if (((colPoint.x >= jA.x && colPoint.x <= jB.x) || (colPoint.x <= jA.x && colPoint.x >= jB.x)) &&
 					((colPoint.y >= jA.y && colPoint.y <= jB.y) || (colPoint.y <= jA.y && colPoint.y >= jB.y))) {
+					lastColPoint = colPoint;
 					return true;
 				}
 			}

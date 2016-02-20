@@ -4,6 +4,8 @@
 #include "GameObject.hpp"
 #include "PhysicsWorld.hpp"
 #include "UIElement.hpp"
+#include "Ship.hpp"
+#include "Camera.hpp"
 class LevelScreen : public Screen{
 public:
 	LevelScreen(Game* game);
@@ -12,7 +14,8 @@ public:
 	void update(float deltaTime);
 	void draw(float deltaTime);
 private:
-	sf::View mainCamera;
+	Ship* playerShip;
 	PhysicsWorld world;
+	Camera camera;
 };
 

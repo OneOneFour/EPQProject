@@ -9,7 +9,6 @@ public:
 	~Planet();
 	void Draw(sf::RenderWindow& window);
 	sf::Vector2f getOrigin(){ return origin; };
-	float getMass(){ return mass; };
 	float getAltitude(sf::Vector2f position);
 	//bool checkCollision(sf::Vector2f position);
 private:
@@ -23,6 +22,5 @@ private:
 	std::vector<sf::Vertex> vertices;
 	std::vector<sf::Vector2f> heightmap;
 	float density;
-	float mass;
 };
 

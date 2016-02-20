@@ -1,12 +1,13 @@
 name = testShip
 ShipData{
 health = 100
-manuvarbility = 50.f
+manuvarbility = 1.5f
 maxThrust = 100.f
 }
 PhysicsData{
 sprite = ship
 mass = 1.f
+CoM = 0.0,0.0
 Vertices{
 0,-0.95
 0.167,0.2

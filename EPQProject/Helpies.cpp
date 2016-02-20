@@ -21,7 +21,7 @@ double getArgumentH(sf::Vector2f A){
 float dotProduct(sf::Vector2f a, sf::Vector2f b) {
 	return a.x*b.x + a.y*b.y;
 }
-sf::Vector2f normalizeVctor(sf::Vector2f vector){
+sf::Vector2f normalizeVector(sf::Vector2f vector){
 	float magnitude = std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2));
 	vector.x = vector.x /  magnitude;
 	vector.y = vector.y / magnitude;
@@ -29,6 +29,20 @@ sf::Vector2f normalizeVctor(sf::Vector2f vector){
 }
 sf::Vector2f lerp(sf::Vector2f vectorA, sf::Vector2f vectorB, float lerpFactor){
 	return sf::Vector2f(vectorA.x + (lerpFactor* (vectorB.x - vectorA.x)), vectorA.y + (lerpFactor* (vectorB.y - vectorA.y)));
+}
+float lerp(float a, float b, float lerpFactor)
+{
+	return a + (lerpFactor*(b-a));
+}
+float incrementTowards(float u, float v, float a,float d){
+	if (u == v) {
+		return v;
+	}
+	else {
+		float dir = sgn(v - u);
+		u += a*d*dir;
+		return (sgn(v - u) != dir) ?v : u;
+	}
 }
 double degreeToRad(float angle){
 	return (angle / 180.0)* M_PI;

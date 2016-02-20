@@ -10,8 +10,10 @@ public:
 	float getHealth();
 	void update(float deltaTime);
 protected:
+	float reloadTimer = 0.5f;
 	float health;
 	float manuvarability;
+	float angularLevel;
 	float thrustLevel;
 	float maxThrust;
 };

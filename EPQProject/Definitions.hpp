@@ -9,3 +9,6 @@ struct PhysicsData {
 struct ShipData{
 	float health, manuv, maxThrust;
 };
+struct BulletData{
+	float damage;
+};

@@ -36,7 +36,6 @@ void ResourceBank::addTexture(const std::string& name, const std::string& filepa
 	printf("LOADED: %s loaded\n", filepath.c_str());
 	this->textures[name] = temp;
 }
-
 void ResourceBank::addFont(const std::string& name, const std::string& filepath){
 	sf::Font* font = new sf::Font();
 	if (!font->loadFromFile(filepath)){
@@ -63,7 +62,7 @@ ShipData ResourceBank::loadShipData(std::ifstream& fileStream){
 	}
 	return shipD;
 }
-std::vector<sf::Vector2f> getVertices(std::ifstream& fileStream) {
+std::vector<sf::Vector2f> ResourceBank::getVertices(std::ifstream& fileStream) {
 	std::string data;
 	std::vector<sf::Vector2f> vertices;
 	while (std::getline(fileStream, data) && data.find("}") == std::string::npos) {
@@ -78,6 +77,17 @@ std::vector<sf::Vector2f> getVertices(std::ifstream& fileStream) {
 
 	}
 	return vertices;
+}
+BulletData ResourceBank::loadBulletData(std::ifstream & fileStream){
+	std::string data;
+	BulletData bullD;
+	while (std::getline(fileStream, data) && data.find("}") == std::string::npos) {
+		data.erase(std::remove_if(data.begin(), data.end(), isspace), data.end());
+		if (data.find("damage=") != std::string::npos) {
+			bullD.damage = std::atof(data.substr(7).c_str());
+		}
+	}
+	return bullD;
 }
 PhysicsData ResourceBank::loadPhysicsData(std::ifstream& fileStream){
 	std::string data;
@@ -140,6 +150,9 @@ void ResourceBank::addDefs(const std::string & filepath){
 		else if (lineData.find("PhysicsData{") != std::string::npos) {
 			printf("LOADED: Physics Def %s at %s \n", name.c_str(), filepath.c_str());
 			ldata.physicsData = loadPhysicsData(file);
+		}
+		else if (lineData.find("BulletData{") != std::string::npos) {
+			ldata.bulletData = loadBulletData(file);
 		}
 	}
 	this->data[name] = ldata;

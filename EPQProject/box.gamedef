@@ -1,0 +1,12 @@
+name = box
+PhysicsData{
+sprite = triShip
+mass = 0.25f
+Vertices{
+-1.0,-1.0
+1.0,-1.0
+1.0,1.0
+-1.0,1.0
+}
+}
+
