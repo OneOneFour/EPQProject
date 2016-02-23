@@ -22,5 +22,5 @@ Ship* Bullet::getOwner(){
 }
 
 void Bullet::onCollision(sf::Vector2f colPoint,PhysicsObject* collided){
-	printf("Hello");
+	//TODO: cause bullet damage depending on speed and base damage. 
 }
