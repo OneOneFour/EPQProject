@@ -49,7 +49,14 @@ sf::Vector2f Collider::getLastCol()
 	return lastColPoint;
 }
 bool Collider::colCheck(Collider& otherCol,sf::Vector2f iPos,sf::Vector2f jPos) {
-	if (dynamic_cast<Bullet*>(&attachedObj) != nullptr) {
+	update();
+	otherCol.update();
+	sf::FloatRect otherAABB = otherCol.getAABB();
+	if (aabb.top + aabb.height + iPos.y <= otherAABB.top + jPos.y) return false ;
+	if (aabb.top + iPos.y >= otherAABB.top + otherAABB.height + jPos.y) return false;
+	if (aabb.left + aabb.width + iPos.x <= otherAABB.left + jPos.x) return false;
+	if (aabb.left + iPos.x >= otherAABB.left + otherAABB.width + jPos.x) return false;
+		if (dynamic_cast<Bullet*>(&attachedObj) != nullptr) {
 		if (dynamic_cast<Bullet*>(&attachedObj)->getOwner()->getCollider() == &otherCol || dynamic_cast<Bullet*>(&otherCol.attachedObj) != nullptr) {
 			return false;
 		}
@@ -59,13 +66,6 @@ bool Collider::colCheck(Collider& otherCol,sf::Vector2f iPos,sf::Vector2f jPos) 
 			return false;
 		}
 	}
-	update();
-	otherCol.update();
-	sf::FloatRect otherAABB = otherCol.getAABB();
-	if (aabb.top + aabb.height + iPos.y <= otherAABB.top + jPos.y) return false ;
-	if (aabb.top + iPos.y >= otherAABB.top + otherAABB.height + jPos.y) return false;
-	if (aabb.left + aabb.width + iPos.x <= otherAABB.left + jPos.x) return false;
-	if (aabb.left + iPos.x >= otherAABB.left + otherAABB.width + jPos.x) return false;
 	for (int i = 0; i < vertices.size(); i++) {
 		for (int j = 0; j < otherCol.getVerticesSize(); j++) {
 			sf::Vector2f iA = vertices[i] + iPos;
